@@ -2,10 +2,9 @@
 
 A simple, modern, and mobile-friendly web application designed to help users study for the U.S. Naturalization Civics Test. This project was initially created to help my mom study on her phone, providing an accessible and interactive learning experience.
 
-The app includes all 100 official questions from the USCIS civics test.
+The app includes all 100 official questions from the USCIS civics test, as administered in Washington State.
 
 **[➡️ Try it here](https://antonndang.github.io/US-Citizenship-Flash-Cards/)**
-
 
 **[➡️ Live Demo Link Here](https://youtube.com/shorts/80EAIibgLjY?feature=share)**
 
