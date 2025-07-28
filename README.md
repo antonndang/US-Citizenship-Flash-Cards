@@ -6,12 +6,10 @@ The app includes all 100 official questions from the USCIS civics test.
 
 **[➡️ Try it here](https://antonndang.github.io/US-Citizenship-Flash-Cards/)**
 
----
+
 **[➡️ Live Demo Link Here](https://youtube.com/shorts/80EAIibgLjY?feature=share)**
 
----
-
-![[App Screenshot](https://imgur.com/a/4bRYRbJ)]
+<img width="609" height="822" alt="Image" src="https://github.com/user-attachments/assets/bd25a4e8-106e-449e-adb0-882a7a1a5a2c" />
 
 ## ✨ Features
 
@@ -26,6 +24,3 @@ This application is packed with features to make studying as effective and user-
 -   **🔑 Keyword Highlighting:** Important terms and concepts in both questions and answers are automatically highlighted to improve focus and memory retention.
 -   **📱 Fully Responsive:** Designed with a mobile-first approach, the interface is clean and easy to use on any device, from phones to tablets and desktops.
 -   **✅ Instant Feedback:** In Test Mode, get immediate feedback on your answers to see what you got right and review the correct answers for what you missed.
--   **🚀 No Backend Needed:** Runs entirely in the browser. It's a fast, lightweight, and easy-to-deploy static website.
-
-## 🛠️ Technologies Used
