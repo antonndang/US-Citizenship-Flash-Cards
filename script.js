@@ -454,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //     }
     // }
 
-    // --- VOICE UPDATE ---
+    // --- VOICE ---
     let isSpeaking = false;
 
     // Replace your entire old speak function with this new one
