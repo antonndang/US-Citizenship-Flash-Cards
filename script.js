@@ -427,28 +427,61 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // If not using ElevenLab
+    // window.speak = function(text) {
+    //     if (synth.speaking) synth.cancel();
+    //     if (text) {
+    //         const cleanText = text.replace(/<[^>]+>/g, '');
+    //         const utterThis = new SpeechSynthesisUtterance(cleanText);
+    //         const preferredVoices = ['Google US English', 'Microsoft Zira - English (United States)', 'Samantha'];
+    //         let chosenVoice = null;
+    //         for (const name of preferredVoices) {
+    //             const found = availableVoices.find(voice => voice.name === name && voice.lang.startsWith('en-'));
+    //             if (found) {
+    //                 chosenVoice = found;
+    //                 break;
+    //             }
+    //         }
+    //         if (!chosenVoice) {
+    //             chosenVoice = availableVoices.find(voice => voice.lang.startsWith('en-US'));
+    //         }
+    //         utterThis.voice = chosenVoice;
+    //         utterThis.pitch = 1;
+    //         utterThis.rate = 0.9;
+    //         synth.speak(utterThis);
+    //     }
+    // }
 
-    window.speak = function(text) {
-        if (synth.speaking) synth.cancel();
+    // --- VOICE UPDATE: This function now calls your secure backend ---
+    window.speak = async function(text) {
+        // Stop any currently playing audio
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio = null;
+        }
+
         if (text) {
             const cleanText = text.replace(/<[^>]+>/g, '');
-            const utterThis = new SpeechSynthesisUtterance(cleanText);
-            const preferredVoices = ['Google US English', 'Microsoft Zira - English (United States)', 'Samantha'];
-            let chosenVoice = null;
-            for (const name of preferredVoices) {
-                const found = availableVoices.find(voice => voice.name === name && voice.lang.startsWith('en-'));
-                if (found) {
-                    chosenVoice = found;
-                    break;
+
+            // Fetch the MP3 audio from our serverless function
+            try {
+                // This calls the /api/speak.js file you created
+                const response = await fetch(`/api/speak?text=${encodeURIComponent(cleanText)}`);
+
+                if (!response.ok) {
+                    throw new Error(`Server responded with ${response.status}`);
                 }
+
+                const audioBlob = await response.blob();
+                const audioUrl = URL.createObjectURL(audioBlob);
+                currentAudio = new Audio(audioUrl);
+                currentAudio.play();
+
+            } catch (error) {
+                console.error("Audio playback failed:", error);
+                // Optional: You can add a fallback to the old browser voice here if you want
+                alert("Sorry, the premium voice service is currently unavailable.");
             }
-            if (!chosenVoice) {
-                chosenVoice = availableVoices.find(voice => voice.lang.startsWith('en-US'));
-            }
-            utterThis.voice = chosenVoice;
-            utterThis.pitch = 1;
-            utterThis.rate = 0.9;
-            synth.speak(utterThis);
         }
     }
 
