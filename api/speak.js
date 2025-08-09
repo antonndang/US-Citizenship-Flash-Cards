@@ -2,14 +2,12 @@
 // It runs securely on a server, not in the user's browser.
 
 export default async function handler(request, response) {
-  // Get the text to speak from the request URL (e.g., /api/speak?text=Hello)
   const { text } = request.query;
 
   if (!text) {
     return response.status(400).json({ error: 'Text to speak is required.' });
   }
 
-  // Securely get your API key from the Vercel environment variables
   const apiKey = process.env.ELEVENLABS_API_KEY;
   const voiceId = '21m00Tcm4TlvDq8ikWAM'; // This is the ID for the voice "Rachel"
 
@@ -35,19 +33,25 @@ export default async function handler(request, response) {
     const elevenResponse = await fetch(url, options);
 
     if (!elevenResponse.ok) {
-      throw new Error(`ElevenLabs API failed with status: ${elevenResponse.status}`);
+      // If ElevenLabs returned an error, send it to the browser for debugging
+      const errorData = await elevenResponse.json();
+      console.error('ElevenLabs API Error:', errorData);
+      return response.status(elevenResponse.status).json(errorData);
     }
 
-    // The response is the audio itself. We send it directly back to the browser.
-    // Vercel handles this streaming efficiently.
-    return new Response(elevenResponse.body, {
-        headers: {
-            'Content-Type': 'audio/mpeg',
-        },
-    });
+    // --- UPDATE: This is the corrected way to handle the audio response ---
+    // 1. Get the audio data as a buffer.
+    const audioBuffer = await elevenResponse.arrayBuffer();
+
+    // 2. Set the correct header to tell the browser it's an MP3 file.
+    response.setHeader('Content-Type', 'audio/mpeg');
+
+    // 3. Send the audio buffer back to the browser.
+    return response.status(200).send(Buffer.from(audioBuffer));
+    // --- END OF UPDATE ---
 
   } catch (error) {
-    console.error('Error fetching from ElevenLabs API:', error);
+    console.error('Server-side Error:', error);
     return response.status(500).json({ error: 'Failed to synthesize speech.' });
   }
 }
