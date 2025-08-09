@@ -1,5 +1,4 @@
-// This is your Vercel Serverless Function.
-// It runs securely on a server, not in the user's browser.
+// in api/speak.js
 
 export default async function handler(request, response) {
   const { text } = request.query;
@@ -9,7 +8,7 @@ export default async function handler(request, response) {
   }
 
   const apiKey = process.env.ELEVENLABS_API_KEY;
-  const voiceId = '21m00Tcm4TlvDq8ikWAM'; // This is the ID for the voice "Rachel"
+  const voiceId = 'jqcCZkN6Knx8BJ5TBdYR'; // "sarah"
 
   const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
 
@@ -33,22 +32,21 @@ export default async function handler(request, response) {
     const elevenResponse = await fetch(url, options);
 
     if (!elevenResponse.ok) {
-      // If ElevenLabs returned an error, send it to the browser for debugging
       const errorData = await elevenResponse.json();
       console.error('ElevenLabs API Error:', errorData);
       return response.status(elevenResponse.status).json(errorData);
     }
 
-    // --- UPDATE: This is the corrected way to handle the audio response ---
+    // --- THIS IS THE CORRECTED PART ---
     // 1. Get the audio data as a buffer.
     const audioBuffer = await elevenResponse.arrayBuffer();
 
     // 2. Set the correct header to tell the browser it's an MP3 file.
     response.setHeader('Content-Type', 'audio/mpeg');
 
-    // 3. Send the audio buffer back to the browser.
+    // 3. Send the audio buffer back to the browser using the response object.
     return response.status(200).send(Buffer.from(audioBuffer));
-    // --- END OF UPDATE ---
+    // --- END OF CORRECTION ---
 
   } catch (error) {
     console.error('Server-side Error:', error);

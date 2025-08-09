@@ -155,6 +155,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let shuffledTestQuestions = [];
     let incorrectTestQuestions = [];
 
+    let currentAudio = null;
+
     const synth = window.speechSynthesis;
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     let recognition = null;
