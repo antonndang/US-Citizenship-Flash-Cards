@@ -454,9 +454,17 @@ document.addEventListener('DOMContentLoaded', () => {
     //     }
     // }
 
-    // --- VOICE UPDATE: This function now calls your secure backend ---
+    // --- VOICE UPDATE ---
+    let isSpeaking = false;
+
+    // Replace your entire old speak function with this new one
     window.speak = async function(text) {
-        // Stop any currently playing audio
+        // 1. If a sound is already being fetched or playing, do nothing.
+        if (isSpeaking) {
+            return;
+        }
+
+        // 2. Stop any audio that might have been left playing from a previous action.
         if (currentAudio) {
             currentAudio.pause();
             currentAudio = null;
@@ -465,9 +473,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (text) {
             const cleanText = text.replace(/<[^>]+>/g, '');
 
-            // Fetch the MP3 audio from our serverless function
             try {
-                // This calls the /api/speak.js file you created
+                // 3. Set the "speaking" state to true to block new requests.
+                isSpeaking = true;
+
+                // You could add a visual loading indicator here if you wanted
+
                 const response = await fetch(`/api/speak?text=${encodeURIComponent(cleanText)}`);
 
                 if (!response.ok) {
@@ -477,12 +488,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const audioBlob = await response.blob();
                 const audioUrl = URL.createObjectURL(audioBlob);
                 currentAudio = new Audio(audioUrl);
+
+                // 4. Add an event listener to reset the state when the audio finishes playing.
+                currentAudio.onended = () => {
+                    isSpeaking = false;
+                    // You would remove the visual loading indicator here
+                };
+
                 currentAudio.play();
 
             } catch (error) {
                 console.error("Audio playback failed:", error);
-                // Optional: You can add a fallback to the old browser voice here if you want
                 alert("Sorry, the premium voice service is currently unavailable.");
+                // 5. Make sure to reset the state even if there's an error.
+                isSpeaking = false;
             }
         }
     }
