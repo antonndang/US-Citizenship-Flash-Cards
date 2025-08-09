@@ -22,6 +22,7 @@ export default async function handler(request, response) {
       text: text,
       model_id: 'eleven_multilingual_v2',
       voice_settings: {
+        speed: 77,
         stability: 0.5,
         similarity_boost: 0.75,
       },
