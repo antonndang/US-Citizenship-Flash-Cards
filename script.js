@@ -457,27 +457,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- VOICE ---
     let isSpeaking = false;
 
-    // Replace your entire old speak function with this new one
-    window.speak = async function(text) {
-        // 1. If a sound is already being fetched or playing, do nothing.
-        if (isSpeaking) {
-            return;
-        }
+    // ... other state variables like let currentAudio = null;
 
-        // 2. Stop any audio that might have been left playing from a previous action.
+    // Replace your entire old window.speak function with this new version
+    window.speak = async function(text) {
+        // 1. Stop any audio that is currently playing.
         if (currentAudio) {
             currentAudio.pause();
             currentAudio = null;
+        }
+
+        // 2. If a new sound is already being fetched, cancel this new request.
+        if (isSpeaking) {
+            return;
         }
 
         if (text) {
             const cleanText = text.replace(/<[^>]+>/g, '');
 
             try {
-                // 3. Set the "speaking" state to true to block new requests.
+                // 3. Set the state to "loading" to block other requests.
                 isSpeaking = true;
-
-                // You could add a visual loading indicator here if you wanted
 
                 const response = await fetch(`/api/speak?text=${encodeURIComponent(cleanText)}`);
 
@@ -489,10 +489,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const audioUrl = URL.createObjectURL(audioBlob);
                 currentAudio = new Audio(audioUrl);
 
-                // 4. Add an event listener to reset the state when the audio finishes playing.
+                // 4. When the audio finishes playing naturally, reset the state.
                 currentAudio.onended = () => {
                     isSpeaking = false;
-                    // You would remove the visual loading indicator here
+                    currentAudio = null;
                 };
 
                 currentAudio.play();
@@ -500,7 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 console.error("Audio playback failed:", error);
                 alert("Sorry, the premium voice service is currently unavailable.");
-                // 5. Make sure to reset the state even if there's an error.
+                // 5. If there's an error, make sure to reset the state.
                 isSpeaking = false;
             }
         }
