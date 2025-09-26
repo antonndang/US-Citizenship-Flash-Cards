@@ -14,8 +14,9 @@ The app includes all 100 official questions from the USCIS civics test, as admin
 
 This application is packed with features to make studying as effective and user-friendly as possible:
 
--   **Two Learning Modes:**
+-   **3 Learning Modes:**
     -   **📚 Learning Mode:** A classic flashcard experience. Browse through questions, flip them to see the answers, and navigate back and forth at your own pace.
+    -   **🔒 + 🔑 Quiz Mode:** with 10 questions, you will pass if correct over 7/10. Next try will repeat 3 wrong question
     -   **✍️ Test Mode:** A powerful quiz mode that presents questions in a random order and allows you to type or speak your answer to test your knowledge.
 -   **🌓 Dark & Light Themes:** Automatically detects your system preference and includes a toggle to switch between light and dark modes for comfortable viewing anytime.
 -   **🔊 Text-to-Speech:** Listen to both questions and answers with the click of a button, perfect for auditory learners or for practicing pronunciation.
