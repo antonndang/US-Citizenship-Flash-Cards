@@ -8,7 +8,7 @@ The app includes all 100 official questions from the USCIS civics test, as admin
 
 **[➡️ Live Demo Link Here](https://youtube.com/shorts/80EAIibgLjY?feature=share)**
 
-<img width="609" height="822" alt="Image" src="(https://github.com/user-attachments/assets/8cfbe342-35fa-43c8-8d27-a7794efb7661)" />
+<img width="609" height="822" alt="Image" src="https://github.com/user-attachments/assets/8cfbe342-35fa-43c8-8d27-a7794efb7661" />
 
 ## ✨ Features
 
