@@ -4,7 +4,7 @@ A simple, modern, and mobile-friendly web application designed to help users stu
 
 The app includes all 100 official questions from the USCIS civics test, as administered in Washington State.
 
-**[➡️ Try it here](https://antonndang.github.io/US-Citizenship-Flash-Cards/)**
+**[➡️ Try it here](https://us-citizenship-flash-cards-59rnssrex-antons-projects-a102fb4e.vercel.app/)**
 
 **[➡️ Live Demo Link Here](https://youtube.com/shorts/80EAIibgLjY?feature=share)**
 
